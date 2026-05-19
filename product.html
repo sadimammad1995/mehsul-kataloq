@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Məhsul</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #242424;
+    --accent: #c9a96e;
+    --accent2: #e8c98a;
+    --text: #f0ede6;
+    --muted: #888;
+    --border: #2e2e2e;
+    --green: #5cb85c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  nav {
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent2); }
+
+  nav span { color: var(--muted); font-size: 0.8rem; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 40px;
+  }
+
+  .product-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .product-layout { grid-template-columns: 1fr; gap: 30px; }
+    .container { padding: 30px 20px; }
+    nav { padding: 16px 20px; }
+  }
+
+  .product-image-wrap {
+    position: sticky;
+    top: 30px;
+  }
+
+  .product-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+    background: var(--surface2);
+    animation: fadeIn 0.5s ease;
+  }
+
+  .product-image-placeholder {
+    width: 100%; aspect-ratio: 1;
+    background: var(--surface2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .product-info { animation: slideUp 0.5s ease; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .product-id {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .product-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .prices-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .price-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .price-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: border-color 0.2s, background 0.2s;
+    animation: fadeIn 0.4s ease both;
+  }
+
+  .price-item:hover {
+    border-color: var(--accent);
+    background: var(--surface2);
+  }
+
+  .price-item:nth-child(1) { animation-delay: 0.05s; }
+  .price-item:nth-child(2) { animation-delay: 0.10s; }
+  .price-item:nth-child(3) { animation-delay: 0.15s; }
+  .price-item:nth-child(4) { animation-delay: 0.20s; }
+  .price-item:nth-child(5) { animation-delay: 0.25s; }
+
+  .price-market {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .price-right {
+    text-align: right;
+  }
+
+  .price-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--accent2);
+  }
+
+  .price-date {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .best-badge {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(92,184,92,0.15);
+    color: var(--green);
+    border: 1px solid rgba(92,184,92,0.3);
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .no-prices {
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 20px 0;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 100px 20px;
+    color: var(--muted);
+  }
+
+  .loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error {
+    text-align: center;
+    padding: 80px 20px;
+    color: #e07070;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">← Kataloqua qayıt</a>
+  <span>/</span>
+  <span id="nav-name" style="color:var(--muted);font-size:0.85rem;">Məhsul</span>
+</nav>
+
+<div id="loading-state" class="loading">Məlumatlar yüklənir</div>
+<div class="container" id="main-content" style="display:none;">
+  <div class="product-layout">
+    <div class="product-image-wrap">
+      <img id="prod-img" class="product-image" src="" alt="" onerror="this.outerHTML='<div class=\\'product-image-placeholder\\'>Şəkil yüklənmədi</div>'">
+    </div>
+    <div class="product-info">
+      <div class="product-id" id="prod-id"></div>
+      <h1 class="product-name" id="prod-name"></h1>
+      <p class="product-desc" id="prod-desc"></p>
+      <div class="prices-title">Market Qiymətləri</div>
+      <div class="price-list" id="price-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID = '1GycxQx2qRQy3hUFt4CHVbi56r8BtcOZPfgypiLnAQM0';
+
+const params = new URLSearchParams(window.location.search);
+const productId = params.get('id');
+
+async function fetchSheet(sheetName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+  const res = await fetch(url);
+  const text = await res.text();
+  const json = JSON.parse(text.substring(47).slice(0, -2));
+  return json.table.rows.map(r => r.c.map(c => c ? (c.v !== null && c.v !== undefined ? String(c.v) : '') : ''));
+}
+
+async function init() {
+  const loading = document.getElementById('loading-state');
+  const content = document.getElementById('main-content');
+
+  if (!productId) {
+    loading.innerHTML = '<div class="error">Məhsul ID tapılmadı.</div>';
+    return;
+  }
+
+  try {
+    const [productRows, priceRows] = await Promise.all([
+      fetchSheet('Products'),
+      fetchSheet('Prices')
+    ]);
+
+    // Find product (skip header)
+    const product = productRows.slice(1).find(r => r[0] === productId);
+    if (!product) {
+      loading.innerHTML = `<div class="error">ID=${productId} olan məhsul tapılmadı.</div>`;
+      return;
+    }
+
+    const [id, name, imageUrl, description] = product;
+
+    // Set product info
+    document.title = name;
+    document.getElementById('nav-name').textContent = name;
+    document.getElementById('prod-id').textContent = `Məhsul № ${id}`;
+    document.getElementById('prod-name').textContent = name;
+    document.getElementById('prod-desc').textContent = description || 'Məlumat yoxdur.';
+
+    const img = document.getElementById('prod-img');
+    if (imageUrl) {
+      img.src = imageUrl;
+      img.alt = name;
+    } else {
+      img.outerHTML = '<div class="product-image-placeholder">Şəkil yoxdur</div>';
+    }
+
+    // Filter prices for this product
+    const prices = priceRows.slice(1).filter(r => r[0] === productId);
+
+    const priceList = document.getElementById('price-list');
+
+    if (prices.length === 0) {
+      priceList.innerHTML = '<div class="no-prices">Bu məhsul üçün qiymət məlumatı yoxdur.</div>';
+    } else {
+      // Find minimum price for badge
+      const numericPrices = prices.map(r => parseFloat(r[2]) || 0);
+      const minPrice = Math.min(...numericPrices.filter(p => p > 0));
+
+      prices.forEach(row => {
+        const [, market, price, date] = row;
+        const numPrice = parseFloat(price) || 0;
+        const isBest = numPrice > 0 && numPrice === minPrice;
+
+        const item = document.createElement('div');
+        item.className = 'price-item';
+        item.innerHTML = `
+          <div class="price-market">
+            ${market || 'Naməlum market'}
+            ${isBest ? '<span class="best-badge">Ən ucuz</span>' : ''}
+          </div>
+          <div class="price-right">
+            <div class="price-value">${numPrice > 0 ? numPrice.toFixed(2) + ' ₼' : '—'}</div>
+            ${date ? `<span class="price-date">${date}</span>` : ''}
+          </div>
+        `;
+        priceList.appendChild(item);
+      });
+    }
+
+    loading.style.display = 'none';
+    content.style.display = 'block';
+
+  } catch (err) {
+    console.error(err);
+    loading.innerHTML = `<div class="error">Xəta: ${err.message}</div>`;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
